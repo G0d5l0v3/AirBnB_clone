@@ -1,51 +1,90 @@
-# AirBnB_clone
+# AirBnB clone - The console
 
-# Synopsis
-The Airbnb clone project for which we are creating a copy of the Airbnb. Only some features will be implemented and will be listed below once completed.
+This project is the first stage on  building a clone of the AirBnB website. This stage implements a backend interface, or console, to manage program data, and the console commands allow the user to create, update, destroy ... objects, and manage file storage. Using a system of JSON serialization/deserialization.
 
-# Features
-Command Interpreter
-Description
-The Command Interpreter is used to manage the whole application's functionality from the command line, such as:
+## How to Use
 
-Create a new object.
-Retrieve an object from a file, database, etc.
-Execute operation on objects. e.g. Count, compute statistics, etc.
-Update object's attributes.
-Destroy an object.
-Usage
-To launch the console application in interactive mode simply run:
+1. After cloning the repository locate the "console.py" file and run it 
+```
+AirBnB_clone$ ./console.py 
+```
+Then a promp will appear like this
+```
+(hbnb)
+```
+Now u can Use our built in commands
 
-console.py
+### Commands
 
-or to use the non-interactive mode run:
+|     command      |       Description       |        Usage       |
+|:-----------------|:-----------------------:|:-------------------:|
+| EOF  |  the EOF exits the program   |    EOF     |
+| all  |  Prints all string representation of all instances based or not on the class name| all <className>  |
+| count|  counts how many instances of class created and saved| count <class_name> |
+| create| creates a new instance of the class passed as argument| create <className> |
+| destroy| Deletes an instance based on the class name and id| destroy <className> <objectId>|
+| help | List available commands with "help" or detailed help with "help cmd"| help <cmd>|
+| quit | The quit command exits the program | quit |
+| show | prints the string representation of an instance | show <className> <objectId> |
+| update| Updates an object's attributes | update <className> <id> <attName> <attVal>|
 
-echo "your-command-goes-here" | ./console.py
+### Alternative Syntax
+Also you can run the commands [count, show, destroy, update, all] in this format too: 
+```
+<class name>.<command>([<id> [<*args> or <**kwargs>]])
+```
 
-# Commands
+## Examples
 
-help or ?	Displays the documented commands.	help
+### Syntax 1
+##### Create Object
+Usage: create <class_name>
+```
+(hbnb) create User
+cb8562e5-82c1-4cb8-9d58-06c0fe3e0c98
+(hbnb)  
+```
 
-quit	Exits the program.	quit
+##### Show string represenation of an object
+Usage: show <class_name> <_id>
+```
+(hbnb) show User cb8562e5-82c1-4cb8-9d58-06c0fe3e0c98
+[User] (cb8562e5-82c1-4cb8-9d58-06c0fe3e0c98) {'id': 'cb8562e5-82c1-4cb8-9d58-06c0fe3e0c98', 'created_at': datetime.datetime(2021, 11, 9, 17, 8, 45, 23018), 'updated_at': datetime.datetime(2021, 11, 9, 17, 8, 45, 23018)}
+(hbnb) 
+```
 
-EOF	Ends the program. Used when files are passed into the program.	N/A
+##### Destro object
+Usage: destroy <class_name> <_id>
+```
+(hbnb) destroy User cb8562e5-82c1-4cb8-9d58-06c0fe3e0c98
+(hbnb) show User cb8562e5-82c1-4cb8-9d58-06c0fe3e0c98
+** no instance found **
+(hbnb) 
+```
 
-create	Creates a new instance of the <class_name>. Creates a Json file with the object representation. and prints the id of created object.	create <class_name>
+### Syntax 2
+##### Show all instances of class User
+Usage: <class_name>.all()
+```
+(hbnb) User.all()
+["[User] (d59dc247-6307-46b8-9e3e-9c241493838b) {'id': 'd59dc247-6307-46b8-9e3e-9c241493838b', 'created_at': datetime.datetime(2021, 11, 9, 14, 16, 45, 138082), 'updated_at': datetime.datetime(2021, 11, 9, 14, 45, 34, 287408), 'first_name': 'betty'}", "[User] (eceae679-ed06-4f47-90f4-1ffa157b3410) {'id': 'eceae679-ed06-4f47-90f4-1ffa157b3410', 'created_at': datetime.datetime(2021, 11, 9, 14, 17, 24, 456980), 'updated_at': datetime.datetime(2021, 11, 9, 14, 17, 24, 456980)}", "[User] (a80a69d0-4c72-4c0d-8184-a6b24042ff8b) {'id': 'a80a69d0-4c72-4c0d-8184-a6b24042ff8b', 'created_at': datetime.datetime(2021, 11, 9, 14, 17, 39, 881359), 'updated_at': datetime.datetime(2021, 11, 9, 14, 17, 39, 881359)}"]
+(hbnb) 
+```
 
-show	Prints the string representation of an instance based on the class name and id.	show <class_name class_id>
+##### Destroy a User Instance
+Usage: <class_name>.destroy(<_id>)
+```
+(hbnb) User.destroy(d59dc247-6307-46b8-9e3e-9c241493838b)
+(hbnb) User.show(d59dc247-6307-46b8-9e3e-9c241493838b)
+** no instance found **
+(hbnb) 
+```
 
-destroy	Deletes and instance base on the class name and id.	destroy <class_name class_id>
-
-all	Prints all string representation of all instances based or not on the class name	all or all <class_name class_id>
-
-update	Updates an instance based on the class name and id by adding or updating attribute	update <class_name class_id key value>
-
-
-Tests
-If you wish to run at the test for this application all of the test are located under the test/ folder and can execute all of them by simply running:
-
-python3 -m unittest discover tests
-
-from the root directory.
-
-
+##### Update an object's attribute
+Usage: <class_name>.update(<_id>, <attribute_name>, <attribute_value>)
+```
+(hbnb) User.update(eceae679-ed06-4f47-90f4-1ffa157b3410, first-name, tutorial)
+(hbnb) User.show(eceae679-ed06-4f47-90f4-1ffa157b3410)
+[User] (eceae679-ed06-4f47-90f4-1ffa157b3410) {'id': 'eceae679-ed06-4f47-90f4-1ffa157b3410', 'created_at': datetime.datetime(2021, 11, 9, 14, 17, 24, 456980), 'updated_at': datetime.datetime(2021, 11, 9, 17, 16, 40, 617514), 'first-name': 'tutorial'}
+(hbnb) 
+```
